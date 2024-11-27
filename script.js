@@ -35,7 +35,7 @@ function addTodoItem(title) {
 
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
-  deleteButton.addEventListener('click', () => li.remove());
+  deleteButton.addEventListener('click', () => { li.remove(); disableEditMode(); });
 
   li.appendChild(editButton);
   li.appendChild(deleteButton);
