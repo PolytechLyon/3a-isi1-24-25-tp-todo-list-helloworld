@@ -1,44 +1,45 @@
-function addItem() {
-    const item = document.getElementById("new-todo-item-title").value;
-    document.getElementById("todo-list").innerHTML += "<li>" + item;
-    document.getElementById("todo-list").innerHTML += "<button onclick='deleteItem()'>Delete</button>";
-    document.getElementById("todo-list").innerHTML += "<button onclick='editItem(" + item + ")'>Edit</button> </li>";
-    document.getElementById("new-todo-item-title").value = "";
+const todoList = document.getElementById('todo-list');
+const newItem = document.getElementById('new-item');
+const newItemTitle = document.getElementById('new-todo-item-title');
+const newItemAddButton = document.getElementById('new-todo-item-add');
+const editItem = document.getElementById('edit-item');
+const editItemTitle = document.getElementById('edit-todo-item-title');
+const editItemConfirmButton = document.getElementById('edit-todo-item-confirm');
+const editItemCancelButton = document.getElementById('edit-todo-item-cancel');
+
+let itemToEdit = null;
+
+newItemAddButton.addEventListener('click', () => {
+  const title = newItemTitle.value.trim();
+  if (title) {
+    addTodoItem(title);
+    newItemTitle.value = '';
+  }
+});
+
+function addTodoItem(title) {
+  const li = document.createElement('li');
+  li.textContent = title;
+
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Edit';
+  editButton.classList.add('edit');
+  editButton.addEventListener('click', () => enableEditMode(li));
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.addEventListener('click', () => li.remove());
+
+  li.appendChild(editButton);
+  li.appendChild(deleteButton);
+
+  todoList.appendChild(li);
 }
 
-
-
-function myFunction() {
-    var x = document.getElementById("myDIV");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  } 
-
-
-//pas encore fonctionnel
-function editItem() {
-    let x = document.getElementById("next-item");
-    let y = document.getElementById("edit-item");
-    if (x.style.display == "hidden") {
-        x.style.display = "block";
-        y.style.display = "hidden";
-      } else {
-        x.style.display = "hidden";
-        y.style.display = "block";
-      }
-    const item = document.getElementById("edit-todo-item-title").value;
-    document.getElementById("todo-list").innerHTML += "<li>" + item + "</li>";
-
-    document.getElementById("edit-todo-item-title").value = "";
-}
-
-//pas encore fonctionnel
-function cancelEditItem() {}
-
-//pas encore fonctionnel
-function deleteItem(item) {
-    item = "";
+function enableEditMode(itemElement) {
+  console.log("enableEditMode");
+  itemToEdit = itemElement;
+  editItemTitle.value = itemElement.firstChild.textContent;
+  newItem.classList.add('hidden');
+  editItem.classList.remove('hidden');
 }
