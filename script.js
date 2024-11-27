@@ -37,9 +37,25 @@ function addTodoItem(title) {
 }
 
 function enableEditMode(itemElement) {
-  console.log("enableEditMode");
   itemToEdit = itemElement;
   editItemTitle.value = itemElement.firstChild.textContent;
-  newItem.classList.add('hidden');
-  editItem.classList.remove('hidden');
+  newItem.hidden = true;
+  editItem.hidden = false;
 }
+
+function disableEditMode() {
+  itemToEdit = null;
+  editItem.hidden = true;
+  newItem.hidden = false;
+}
+
+editItemCancelButton.addEventListener('click', disableEditMode);
+
+function confirmEdit() {
+  if (itemToEdit) {
+    itemToEdit.firstChild.textContent = editItemTitle.value.trim();
+    disableEditMode();
+  }
+}
+
+editItemConfirmButton.addEventListener('click', confirmEdit);
